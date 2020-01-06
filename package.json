@@ -1,0 +1,22 @@
+{
+  "name": "benkih-ecommerce",
+  "version": "1.0.0",
+  "description": "BENKIH e-commerce frontend",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "e-commerce",
+    "ecommerce",
+    "benkih",
+    "benkih",
+    "e-commerce"
+  ],
+  "author": "Peter Ihimire",
+  "license": "ISC",
+  "homepage": "https://peterihimire.github.io/benkih-ecommerce",
+  "dependencies": {
+    "gh-pages": "^2.1.1"
+  }
+}

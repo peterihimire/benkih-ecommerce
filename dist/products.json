@@ -1,0 +1,77 @@
+{
+    "items": [
+        {
+            "sys": {"id": "1"},
+            "fields": {
+                "title": "5k imac pro 27inch 2019",
+                "price": 3499.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/imac.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "2"},
+            "fields": {
+                "title": "macbook air",
+                "price": 749.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/note-10-2014-edition.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "3"},
+            "fields": {
+                "title": "samsung vr",
+                "price": 999.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/samsung-vr.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "4"},
+            "fields": {
+                "title": "macbook pro 15 inch",
+                "price": 2449.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/imac.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "5"},
+            "fields": {
+                "title": "chrome book",
+                "price": 949.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/woman-typing-writing-windows.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "6"},
+            "fields": {
+                "title": "samsung galaxy note 10.1",
+                "price": 899.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/note-10-2014-edition.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "7"},
+            "fields": {
+                "title": "macbook pro 13 2011",
+                "price": 1999.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/macbook-pro-2012-13.jpg"} } }
+            }
+        },
+        {
+            "sys": {"id": "8"},
+            "fields": {
+                "title": "dell monitor",
+                "price": 1599.99,
+                "image":{ "fields": {"file": { 
+                "url": "./images/samsung-vr.jpg"} } }
+            }
+        }
+        
+    ]
+}
