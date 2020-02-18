@@ -21,6 +21,7 @@ let buttonsDOM = [];
 
 
 
+
 ( getProducts = () => {
   fetch('products.json')
     .then(function(response){
@@ -140,6 +141,7 @@ const setCartValues = (cart) => {
   
 }
 
+// adds individual item to the cart
 const addCartItem = (item) => {
   console.log(item)
   const div = document.createElement('div');
@@ -253,7 +255,7 @@ const getCart = () => {
 
 
 
-
+//functions for menu and menu overlay
 
 const showMenu = () => {
   menuOverlay.classList.add('transparentBcg');
