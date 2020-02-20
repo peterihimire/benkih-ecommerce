@@ -19,6 +19,20 @@ let buttonsDOM = [];
 
 
 
+// Functions for menu and menu overlay
+const showMenu = () => {
+  menuOverlay.classList.add('transparentBcg');
+  menuDOM.classList.add('showMenu');
+}
+
+const closeMenu = () => {
+  menuOverlay.classList.remove('transparentBcg');
+  menuDOM.classList.remove('showMenu');
+}
+
+
+
+// getting the products from an api
 ( getProducts = () => {
   fetch('products.json')
     .then(function(response){
@@ -29,28 +43,20 @@ let buttonsDOM = [];
       console.log(data)
       // Files I want to work with from this array are id, image, price, title, will have to use destructuring to achieve that
       loadedProducts = data.items;
-      // console.log(loadedProducts)
       products = loadedProducts.map( item => {
         const { title, price } = item.fields;
         const { id } = item.sys;
         const image  = item.fields.image.fields.file.url;
-        // console.log({title, price, id, image})
         return { title, price, id, image}
       })
-      // console.log(products)
-      // return products
       startApp()
-      // console.log(products)
     })
     .catch((error) => {
       console.log(error)
     })
 })()
 
-
-
 startApp = () => {
-  // console.log(products)
   displayProducts()
   setupAPP()
   saveProducts()
@@ -60,6 +66,8 @@ startApp = () => {
 }
 
 
+
+//displaying the products
 const displayProducts = () => {
   // console.log(products)
   let result = '';
@@ -80,7 +88,6 @@ const displayProducts = () => {
   }
   productDOM.innerHTML = result;
 }
-
 
 const getBagButtons = () => {
   // console.log(products)
@@ -136,7 +143,6 @@ const setCartValues = (cart) => {
   cartItems.innerText = itemsTotal;
   
 }
-
 // adds individual item to the cart
 const addCartItem = (item) => {
   console.log(item)
@@ -159,12 +165,17 @@ const addCartItem = (item) => {
   console.log(cartContent);
 }
 
+const showCart = () => {
+  cartDOM.classList.toggle('showCart');
+}
 
 const setupAPP = () => {
   cart = getCart();
-  console.log(cart)
-  setCartValues(cart)
-  populateCart(cart)
+  setCartValues(cart);
+  populateCart(cart);
+  cartBtn.addEventListener('click', showCart);
+  menuBtn.addEventListener('click', showMenu);
+  closeMenuBtn.addEventListener('click', closeMenu);
 }
 
 const populateCart = (cart) => {
@@ -173,26 +184,6 @@ const populateCart = (cart) => {
     addCartItem(item)
   })
 }
-
-const getSingleButton = (id)=> {
-  return buttonsDOM.find(button => button.dataset.id === id)
-}
-
-const removeItem = (id) => {
-  console.log(id)
-  console.log(cart)
-  cart = cart.filter(item => item.id !== id)
-  setCartValues(cart)
-  saveCart(cart)
-  let button = getSingleButton(id)
-  button.disabled = false;
-  button.innerHTML = `
-    <i class="fas fa-shopping-cart"></i>add to cart 
-  `;
-}
-
-
-
 // the functions that run inside the cart
 const cartLogic = () => {
   clearCartBtn.addEventListener('click', clearCart);
@@ -230,24 +221,35 @@ const cartLogic = () => {
     }
   })
 }
-
-
-
 // to clear the cart items and exit the showcart
 const clearCart = (e) => {
-  console.log(e.target)
   const cartItems = cart.map(item => {return item.id; console.log( item, item.id)})
   console.log(cartItems)
   cartItems.forEach(id => {return removeItem(id); console.log(id)})
-
   console.log(cartContent.children);
-
   while(cartContent.children.length > 0){
     cartContent.removeChild(cartContent.children[0])
   }
-
   showCart()
 }
+
+const getSingleButton = (id)=> {
+  return buttonsDOM.find(button => button.dataset.id === id)
+}
+
+const removeItem = (id) => {
+  console.log(id)
+  console.log(cart)
+  cart = cart.filter(item => item.id !== id)
+  setCartValues(cart)
+  saveCart(cart)
+  let button = getSingleButton(id)
+  button.disabled = false;
+  button.innerHTML = `
+    <i class="fas fa-shopping-cart"></i>add to cart 
+  `;
+}
+
 
 
 
@@ -272,22 +274,6 @@ const getCart = () => {
 
 
 
-// Functions for menu and menu overlay
-const showMenu = () => {
-  menuOverlay.classList.add('transparentBcg');
-  menuDOM.classList.add('showMenu');
-}
 
-const closeMenu = () => {
-  menuOverlay.classList.remove('transparentBcg');
-  menuDOM.classList.remove('showMenu');
-}
 
-const showCart = () => {
-  cartDOM.classList.toggle('showCart');
-}
-
-menuBtn.addEventListener('click', showMenu);
-closeMenuBtn.addEventListener('click', closeMenu);
-cartBtn.addEventListener('click', showCart);
 
