@@ -1,5 +1,3 @@
-
-
 // Variable declarations
 const menuBtn = document.querySelector('.fa-bars');
 const closeMenuBtn = document.querySelector('.fa-window-close');
@@ -18,7 +16,6 @@ const productDOM = document.querySelector('.product-center');
 let products = [];
 let cart = [];
 let buttonsDOM = [];
-
 
 
 
@@ -49,12 +46,11 @@ let buttonsDOM = [];
       console.log(error)
     })
 })()
-// getProducts()
+
 
 
 startApp = () => {
   // console.log(products)
- 
   displayProducts()
   setupAPP()
   saveProducts()
@@ -62,6 +58,7 @@ startApp = () => {
   getBagButtons()
   cartLogic()
 }
+
 
 const displayProducts = () => {
   // console.log(products)
@@ -123,7 +120,6 @@ const getBagButtons = () => {
       console.log(cart, cartItem)
     })
   })
-
   // console.log(buttons, typeof(buttons), Array.isArray(buttons))
 }
 
@@ -163,6 +159,7 @@ const addCartItem = (item) => {
   console.log(cartContent);
 }
 
+
 const setupAPP = () => {
   cart = getCart();
   console.log(cart)
@@ -173,39 +170,12 @@ const setupAPP = () => {
 const populateCart = (cart) => {
   console.log(cart)
   cart.forEach(item => {
-    console.log(item)
     addCartItem(item)
   })
 }
 
-const cartLogic = () => {
-  clearCartBtn.addEventListener('click', clearCart);
-  console.log(cartContent)
-  cartContent.addEventListener('click', (e)=> {
-    console.log(e.target)
-    if(e.target.classList.contains('remove-item')){
-      let removeItem = e.target;
-      let id = removeItem.dataset.id;
-      cartContent.removeChild(removeItem.parentElement.parentElement);
-      this.removeItem(id)
-      console.log(id)
-    }
-  })
-}
-
-const clearCart = (e) => {
-  console.log(e.target)
-  const cartItems = cart.map(item => {return item.id; console.log( item, item.id)})
-  console.log(cartItems)
-  cartItems.forEach(id => {return removeItem(id); console.log(id)})
-
-  console.log(cartContent.children);
-
-  while(cartContent.children.length > 0){
-    cartContent.removeChild(cartContent.children[0])
-  }
-
-  showCart()
+const getSingleButton = (id)=> {
+  return buttonsDOM.find(button => button.dataset.id === id)
 }
 
 const removeItem = (id) => {
@@ -221,11 +191,64 @@ const removeItem = (id) => {
   `;
 }
 
-const getSingleButton = (id)=> {
-  return buttonsDOM.find(button => button.dataset.id === id)
-  console.log(id)
-  console.log(buttonsDOM)
+
+
+// the functions that run inside the cart
+const cartLogic = () => {
+  clearCartBtn.addEventListener('click', clearCart);
+  console.log(cartContent)
+  cartContent.addEventListener('click', (e)=> {
+    // console.log(e.target)
+    if(e.target.classList.contains('remove-item')){
+      let removeProd = e.target;
+      let id = removeProd.dataset.id;
+      cartContent.removeChild(removeProd.parentElement.parentElement);
+      removeItem(id)
+      console.log(id)
+    } else if (e.target.classList.contains('fa-chevron-up')){
+      let addAmount = e.target;
+      let id = addAmount.dataset.id;
+      let tempItem = cart.find(item => item.id === id);
+      tempItem.amount = tempItem.amount + 1;
+      saveCart(cart);
+      setCartValues(cart);
+      addAmount.nextElementSibling.innerText = tempItem.amount;
+    } else if(e.target.classList.contains('fa-chevron-down')){
+      let lowerAmount = e.target;
+      let id = lowerAmount.dataset.id;
+      let tempItem2 = cart.find(item => item.id === id);
+      tempItem2.amount = tempItem2.amount - 1;
+      if(tempItem2.amount > 0){
+        saveCart(cart);
+        setCartValues(cart);
+        lowerAmount.previousElementSibling.innerText = tempItem2.amount;
+      } else {
+        cartContent.removeChild(lowerAmount.parentElement.parentElement);
+        removeItem(id)
+      }
+      console.log(lowerAmount,tempItem2, lowerAmount.previousElementSibling)
+    }
+  })
 }
+
+
+
+// to clear the cart items and exit the showcart
+const clearCart = (e) => {
+  console.log(e.target)
+  const cartItems = cart.map(item => {return item.id; console.log( item, item.id)})
+  console.log(cartItems)
+  cartItems.forEach(id => {return removeItem(id); console.log(id)})
+
+  console.log(cartContent.children);
+
+  while(cartContent.children.length > 0){
+    cartContent.removeChild(cartContent.children[0])
+  }
+
+  showCart()
+}
+
 
 
 // Functions For Local Storage 
@@ -249,14 +272,7 @@ const getCart = () => {
 
 
 
-
-
-
-
-
-
-//functions for menu and menu overlay
-
+// Functions for menu and menu overlay
 const showMenu = () => {
   menuOverlay.classList.add('transparentBcg');
   menuDOM.classList.add('showMenu');
@@ -270,9 +286,6 @@ const closeMenu = () => {
 const showCart = () => {
   cartDOM.classList.toggle('showCart');
 }
-
-
-
 
 menuBtn.addEventListener('click', showMenu);
 closeMenuBtn.addEventListener('click', closeMenu);
